@@ -1,8 +1,9 @@
 name: Deploy to Railway
 
 on:
-  push:
-    branches: [Develop]
+  pull_request:
+    branches: [master]
+    types: [closed]
       
 jobs:
   deploy:
