@@ -2,8 +2,7 @@ name: Deploy to Railway
 
 on:
   push:
-    branches:
-      - Develop
+    branches: [Develop]
       
 jobs:
   deploy:
