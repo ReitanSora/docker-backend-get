@@ -1,0 +1,29 @@
+name: Deploy to Railway on Pull Request Merged
+
+on:
+  pull_request:
+    branches: [master]
+    types: [closed]
+
+jobs:
+  verify:
+    name: Check whether a pull request has been merged
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Success Message
+        run: echo "🎉 A pull request is merged by ${{ github.event.pull_request.merged_by.login}}"
+
+  deploy:
+    needs: [verify]
+    name: Deploy to Railway
+    runs-on: ubuntu-latest
+    env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Railway
+        run: railway up --service docker-backend-get
